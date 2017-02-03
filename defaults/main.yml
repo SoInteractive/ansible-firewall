@@ -6,6 +6,6 @@ firewall_enable_ntp: True
 firewall_allow:
   - { subnet: "91.227.212.0/22", proto: "tcp", port: "80" }
   - { subnet: "91.227.212.0/22", proto: "tcp", port: "443" }
-  - { subnet: "192.168.14.0/25" }
+  - { subnet: "192.168.14.0/23" }
   - { interface: "docker0" }
 #  - { interface: "eth1" }
