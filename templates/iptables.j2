@@ -1,0 +1,27 @@
+# {{ ansible_managed }}
+
+*filter
+:INPUT DROP [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+{# BASICS - ALWAYS ENABLED #}
+-A INPUT -i lo -j ACCEPT
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -p icmp --icmp-type 0 -m state --state ESTABLISHED,RELATED -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+{% if firewall_enable_dns %}
+-A INPUT -p udp --sport 53 -m state --state ESTABLISHED -j ACCEPT
+-A INPUT -p tcp --sport 53 -m state --state ESTABLISHED -j ACCEPT
+{% endif %}
+{% if firewall_enable_ntp %}
+-A INPUT -p udp --sport 123 -m state --state ESTABLISHED -j ACCEPT
+{% endif %}
+{% for host in firewall_allow %}
+{# WARNING!!! CAREFULLY EDIT/ADD NEW PARAMETERS (REMEMBER: IT SHOULD BE ONE LINE) #}
+-A INPUT
+{{- " -i " ~ host.interface ~ " " if host.interface is defined else "" -}}
+{{- " -s " ~ host.subnet ~ " " if host.subnet is defined else "" -}}
+{{- " -p " ~ host.proto ~ " -m " ~ host.proto ~ " --dport " ~ host.port ~ " " if host.proto is defined else "" -}}
+-j ACCEPT
+{% endfor %}
+COMMIT

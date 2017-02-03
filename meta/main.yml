@@ -1,0 +1,19 @@
+---
+galaxy_info:
+  author: Pawel Krupa
+  description: Set firewall up
+  company: Sointeractive
+  min_ansible_version: 1.9
+  platforms:
+#   - name: EL
+#     versions:
+#       - all
+   - name: Ubuntu
+     versions:
+       - all
+  galaxy_tags:
+   - template
+
+#dependencies:
+#  - { role: username.common }
+

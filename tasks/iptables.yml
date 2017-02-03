@@ -1,0 +1,21 @@
+---
+- name: install perstistent iptables
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+  apt:
+    name: iptables-persistent
+    state: present
+
+- name: Ensure /etc/iptables exists
+  file:
+    path: "/etc/iptables"
+    state: directory
+    mode: "0755"
+
+- name: Copy iptables template rules over to /etc/iptables
+  template: 
+    src: iptables.j2
+    dest: /etc/iptables/rules.v4
+
+- name: Reload iptables rules
+  shell: "iptables -F INPUT; iptables-restore < /etc/iptables/rules.v4"
