@@ -3,16 +3,18 @@ galaxy_info:
   author: Pawel Krupa
   description: Set firewall up
   company: Sointeractive
-  min_ansible_version: 1.9
+  min_ansible_version: 2.0
   platforms:
 #   - name: EL
 #     versions:
 #       - all
    - name: Ubuntu
      versions:
-       - all
+       - xenial
+       - trusty
   galaxy_tags:
-   - template
+   - iptables
+   - firewall
 
 #dependencies:
 #  - { role: username.common }
