@@ -1,4 +1,15 @@
 ---
+- name: register INPUT chain rules
+  command: iptables -S INPUT
+  register: input_chain
+
+- debug:
+    var: input_chain
+
+- name: flush INPUT chain if policy is ACCEPT
+  command: iptables -F INPUT
+  when: input_chain.stdout_lines[0] == "-P INPUT ACCEPT" and firewall_flush
+
 - name: allow loopback communication
   iptables:
     chain: INPUT
