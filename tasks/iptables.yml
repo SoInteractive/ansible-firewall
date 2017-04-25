@@ -1,4 +1,87 @@
 ---
+- name: register INPUT chain rules
+  command: iptables -S INPUT
+  register: input_chain
+
+- debug:
+    var: input_chain.stdout_lines
+  ignore_errors: True
+
+- name: flush INPUT chain if policy is ACCEPT
+  command: iptables -F INPUT
+  when: input_chain.stdout_lines[0] == "-P INPUT ACCEPT" and firewall_flush
+
+- name: allow loopback communication
+  iptables:
+    chain: INPUT
+    in_interface: lo
+    jump: ACCEPT
+
+- name: allow all established and related connections
+  iptables:
+    chain: INPUT
+    ctstate: ESTABLISHED,RELATED
+    jump: ACCEPT
+
+- name: allow ICMP 0 (ping)
+  iptables:
+    chain: INPUT
+    protocol: icmp
+    icmp_type: 0
+    ctstate: ESTABLISHED,RELATED
+    jump: ACCEPT
+
+- name: allow SSH
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: 22
+    jump: ACCEPT
+
+- name: allow DNS
+  iptables:
+    chain: INPUT
+    protocol: "{{ item }}"
+    source_port: 53
+    ctstate: ESTABLISHED
+    jump: ACCEPT
+  with_items:
+    - udp
+    - tcp
+  when: firewall_enable_dns
+
+- name: allow NTP
+  iptables:
+    chain: INPUT
+    protocol: udp
+    source_port: 123
+    ctstate: ESTABLISHED
+    jump: ACCEPT
+  when: firewall_enable_ntp
+
+- name: allow inside environment communication
+  iptables:
+    chain: INPUT
+    source: "{{ firewall_env_subnet }}"
+    jump: ACCEPT
+  when: firewall_env_subnet != ""
+
+- name: create additional rules
+  iptables:
+    chain: "{{ item.chain | default('INPUT') }}"
+    protocol: "{{ item.proto | default('tcp') }}"
+    source: "{{ item.source | default('0.0.0.0/0')}}"
+    destination_port: "{{ item.port | default('0:65535') }}"
+    in_interface: "{{ item.interface | default(ansible_default_ipv4.interface) }}"
+    jump: ACCEPT
+  with_items: "{{ firewall_allow }}"
+  notify: update firewall
+
+- name: lock it down
+  iptables:
+    chain: INPUT
+    policy: DROP
+
 - name: install perstistent iptables
   environment:
     DEBIAN_FRONTEND: noninteractive
@@ -6,16 +89,16 @@
     name: iptables-persistent
     state: present
 
-- name: Ensure /etc/iptables exists
-  file:
-    path: "/etc/iptables"
-    state: directory
-    mode: "0755"
-
-- name: Copy iptables template rules over to /etc/iptables
-  template: 
-    src: iptables.j2
-    dest: /etc/iptables/rules.v4
-
-- name: Reload iptables rules
-  shell: "iptables -F INPUT; iptables-restore < /etc/iptables/rules.v4"
+#- name: Ensure /etc/iptables exists
+#  file:
+#    path: "/etc/iptables"
+#    state: directory
+#    mode: "0755"
+#
+#- name: Copy iptables template rules over to /etc/iptables
+#  template: 
+#    src: iptables.j2
+#    dest: /etc/iptables/rules.v4
+#
+#- name: Reload iptables rules
+#  shell: "iptables -F INPUT; iptables-restore < /etc/iptables/rules.v4"
