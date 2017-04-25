@@ -3,7 +3,8 @@
 firewall_enable_dns: True
 firewall_enable_ntp: True
 
-firewall_env_subnet: "{{ ansible_default_ipv4.network }}/24"
+#firewall_env_subnet: "{{ ansible_default_ipv4.network }}/24"
+firewall_env_subnet: ""
 
 firewall_flush: false
 firewall_allow:
