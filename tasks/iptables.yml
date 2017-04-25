@@ -4,7 +4,8 @@
   register: input_chain
 
 - debug:
-    var: input_chain
+    var: input_chain.stdout_lines
+  ignore_errors: True
 
 - name: flush INPUT chain if policy is ACCEPT
   command: iptables -F INPUT
