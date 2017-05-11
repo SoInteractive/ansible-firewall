@@ -23,12 +23,12 @@
     ctstate: ESTABLISHED,RELATED
     jump: ACCEPT
 
-- name: allow ICMP 0 (ping)
+- name: allow ICMP 8 (ping)
   iptables:
     chain: INPUT
     protocol: icmp
-    icmp_type: 0
-    ctstate: ESTABLISHED,RELATED
+    icmp_type: 8
+    ctstate: NEW,ESTABLISHED,RELATED
     jump: ACCEPT
 
 - name: allow SSH
