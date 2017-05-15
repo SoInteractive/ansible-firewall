@@ -1,4 +1,17 @@
 ---
+- name: install iptables service [CentOS]
+  yum:
+    name: iptables-services
+    state: installed
+  when: ansible_pkg_mgr == "yum"
+
+- name: Start iptables service [CentOS]
+  service:
+    name: iptables
+    state: started
+    enabled: yes
+  when: ansible_pkg_mgr == "yum"
+
 - name: register INPUT chain rules
   command: iptables -S INPUT
   register: input_chain
@@ -82,23 +95,14 @@
     chain: INPUT
     policy: DROP
 
-- name: install perstistent iptables
+- name: install perstistent iptables [Ubuntu]
   environment:
     DEBIAN_FRONTEND: noninteractive
   apt:
     name: iptables-persistent
     state: present
+  when: ansible_pkg_mgr == "apt"
 
-#- name: Ensure /etc/iptables exists
-#  file:
-#    path: "/etc/iptables"
-#    state: directory
-#    mode: "0755"
-#
-#- name: Copy iptables template rules over to /etc/iptables
-#  template: 
-#    src: iptables.j2
-#    dest: /etc/iptables/rules.v4
-#
-#- name: Reload iptables rules
-#  shell: "iptables -F INPUT; iptables-restore < /etc/iptables/rules.v4"
+- name: Save iptables
+  command: "/usr/libexec/iptables/iptables.init save"
+  when: ansible_pkg_mgr == "yum"
