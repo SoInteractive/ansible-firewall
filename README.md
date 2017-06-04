@@ -3,7 +3,7 @@
 Ansible Role: firewall
 ======================
 
-[![Build Status](https://ci.devops.sosoftware.pl/buildStatus/icon?job=SoInteractive/firewall/master)](https://ci.devops.sosoftware.pl/job/SoInteractive/firewall/master) [![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT) [![Ansible Role](https://img.shields.io/ansible/role/18225.svg)](https://galaxy.ansible.com/SoInteractive/firewall/) [![Twitter URL](https://img.shields.io/twitter/follow/sointeractive.svg?style=social&label=Follow%20%40SoInteractive)](https://twitter.com/sointeractive)
+[![Build Status](https://ci.devops.sosoftware.pl/buildStatus/icon?job=SoInteractive/firewall/master)](https://ci.devops.sosoftware.pl/job/SoInteractive/firewall/master) [![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT) [![Ansible Role](https://img.shields.io/ansible/role/18231.svg)](https://galaxy.ansible.com/SoInteractive/firewall/) [![Twitter URL](https://img.shields.io/twitter/follow/sointeractive.svg?style=social&label=Follow%20%40SoInteractive)](https://twitter.com/sointeractive)
 
 Ansible role to setup persistent ingress firewall based on iptables.
 By design it will open communication:
