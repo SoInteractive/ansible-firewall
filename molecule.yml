@@ -1,0 +1,26 @@
+---
+ansible:
+  playbook: tests/playbook.yml
+driver:
+  name: docker
+verifier:
+  name: testinfra
+docker:
+  containers:
+    - name: firewall-xenial
+      image: ubuntu
+      image_version: xenial
+      privileged: true
+      hostname: firewall
+    - name: firewall-centos
+      image: centos/systemd
+      image_version: latest
+      privileged: true
+molecule:
+  test:
+    sequence:
+      - destroy
+      - syntax
+      - create
+      - converge
+      - verify

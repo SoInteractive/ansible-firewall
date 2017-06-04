@@ -1,0 +1,12 @@
+---
+- hosts: all
+  tasks:
+    - name: install iproute
+      package:
+        name: iproute
+        state: present
+
+- hosts: all
+  gather_facts: yes
+  roles:
+    - firewall

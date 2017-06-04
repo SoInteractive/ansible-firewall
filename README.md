@@ -1,33 +1,31 @@
-Setup up persistent iptables rules
-==================================
+<p><img src="http://www.kvmtechnologia.hu/images/stories/firewall.jpg" alt="firewall logo" title="firewall" align="right" height="60" /></p>
+
+Ansible Role: firewall
+======================
+
+[![Build Status](https://ci.devops.sosoftware.pl/buildStatus/icon?job=SoInteractive/firewall/master)](https://ci.devops.sosoftware.pl/job/SoInteractive/firewall/master) [![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT) [![Ansible Role](https://img.shields.io/ansible/role/18225.svg)](https://galaxy.ansible.com/SoInteractive/firewall/) [![Twitter URL](https://img.shields.io/twitter/follow/sointeractive.svg?style=social&label=Follow%20%40SoInteractive)](https://twitter.com/sointeractive)
 
 Ansible role to setup persistent ingress firewall based on iptables.
-By default it will open:
-  - communication on port 22 (SSH)
-  - NTP communication
-  - DNS communication
-  - docker0 bridge networking
+By design it will open communication:
+  - on loopback interface
+  - on port 22 (SSH)
+  - for NTP
+  - for DNS
 
-Requirements
-------------
+Example usage
+-------------
 
-Iptables must be installed on target server.
-Role currently supports only Debian-based environments.
-
-Examples
---------
-
-Basic usage in a playbook:
+Use it in a playbook as follows:
 ```yaml
-- hosts: 'servers'
+- hosts: all
   become: true
   roles:
-    - firewall
+    - SoInteractive.firewall
 ```
-Little more advanced usage 
-(enable traffic on port 80 only for 10.0.0.0/8 subnet and 443 for everyone)
+
+Little more advanced usage (enable traffic on port 80 only for 10.0.0.0/8 subnet and 443 for everyone)
 ```yaml
-- hosts: 'servers'
+- hosts: webserver
   become: true
   roles:
     - firewall
@@ -40,4 +38,7 @@ Little more advanced usage
 Have a look at the [defaults/main.yml](defaults/main.yml) for role variables
 that can be overridden.
 
+TODO
+----
 
+Refactor to enable idempotance tests
