@@ -20,6 +20,7 @@
 - name: register INPUT chain rules
   command: iptables -S INPUT
   register: input_chain
+  changed_when: False
   tags: skip_ansible_lint
 
 - name: flush INPUT chain if policy is ACCEPT
@@ -96,6 +97,7 @@
   iptables:
     chain: INPUT
     policy: DROP
+  changed_when: False
 
 - name: install perstistent iptables [Ubuntu]
   environment:
@@ -107,4 +109,7 @@
 
 - name: Save iptables
   command: "/usr/libexec/iptables/iptables.init save"
+  args:
+    creates: "/etc/sysconfig/iptables"
+#  changed_when: False
   when: ansible_pkg_mgr == "yum"
