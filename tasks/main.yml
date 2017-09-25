@@ -47,11 +47,19 @@
     ctstate: NEW,ESTABLISHED,RELATED
     jump: ACCEPT
 
-- name: allow SSH
+- name: allow incoming SSH connection
   iptables:
     chain: INPUT
     protocol: tcp
     destination_port: 22
+    jump: ACCEPT
+
+- name: allow established SSH access
+  iptables:
+    chain: OUTPUT
+    protocol: tcp
+    source_port: 22
+    ctstate: ESTABLISHED
     jump: ACCEPT
 
 - name: allow DNS
