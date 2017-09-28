@@ -121,3 +121,6 @@
     creates: "/etc/sysconfig/iptables"
 #  changed_when: False
   when: ansible_pkg_mgr == "yum"
+
+- include: fail2ban.yml
+  when: ansible_default_ipv4.address | match("10.") or ansible_default_ipv4.address | match("172.") or ansible_default_ipv4.address | match("192.")

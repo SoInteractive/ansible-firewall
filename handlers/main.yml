@@ -2,3 +2,11 @@
 - name: update firewall
   shell: iptables-save > /etc/iptables/rules.v4
   when: ansible_pkg_mgr == "apt"
+
+- name: systemd reload
+  command: systemctl daemon-reload
+
+- name: restart fail2ban
+  service:
+    name: fail2ban
+    state: restarted
