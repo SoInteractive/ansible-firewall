@@ -5,7 +5,7 @@ Ansible Role: firewall
 
 [![Build Status](https://ci.devops.sosoftware.pl/buildStatus/icon?job=SoInteractive/firewall/master)](https://ci.devops.sosoftware.pl/blue/organizations/jenkins/SoInteractive%2Ffirewall/activity) [![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT) [![Ansible Role](https://img.shields.io/ansible/role/18231.svg)](https://galaxy.ansible.com/SoInteractive/firewall/) [![Twitter URL](https://img.shields.io/twitter/follow/sointeractive.svg?style=social&label=Follow%20%40SoInteractive)](https://twitter.com/sointeractive)
 
-Ansible role to setup persistent ingress firewall based on iptables.
+Ansible role to setup persistent ingress firewall based on iptables with fail2ban.
 By design it will open communication:
   - on loopback interface
   - on port 22 (SSH)
