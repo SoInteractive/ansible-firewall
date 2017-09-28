@@ -123,4 +123,7 @@
   when: ansible_pkg_mgr == "yum"
 
 - include: fail2ban.yml
-  when: ansible_default_ipv4.address | ipaddr('10.0.0.0/8') or ansible_default_ipv4.address | ipaddr('172.16.0.0/12') or ansible_default_ipv4.address | ipaddr('192.168.0.0/16')
+  when:
+    - not(ansible_default_ipv4.address | ipaddr('10.0.0.0/8'))
+    - not(ansible_default_ipv4.address | ipaddr('172.16.0.0/12'))
+    - not(ansible_default_ipv4.address | ipaddr('192.168.0.0/16'))
