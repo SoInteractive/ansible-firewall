@@ -16,4 +16,3 @@ firewall_allow:
 
 firewall_provided_interfaces: "{{ firewall_allow | map(attribute='interface') | select('defined') | reject('search','docker') | list }}"
 firewall_available_interfaces: "{{ ansible_interfaces | list }}"
-
