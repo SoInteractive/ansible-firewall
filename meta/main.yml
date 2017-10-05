@@ -1,7 +1,7 @@
 ---
 galaxy_info:
-  author: Pawel Krupa
-  description: Setup simple ingress firewall
+  author: Pawel Krupa, Tomasz Grzesik (merged firewall and fail2ban)
+  description: Setup simple ingress firewall and fail2ban
   company: Sointeractive
   license: MIT
   min_ansible_version: 2.2

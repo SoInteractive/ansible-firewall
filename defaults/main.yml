@@ -13,3 +13,14 @@ firewall_allow:
 #  - { source: "192.168.14.0/23" }
   - { interface: "docker0" }
 #  - { interface: "eth1" }
+
+
+#fail2ban options
+firewall_fail2ban_email: ""
+firewall_fail2ban_exclude: []
+#  - "172.16.0.0/16"
+
+firewall_fail2ban_bantime: 3600
+firewall_fail2ban_jails:
+  - sshd
+#  - nginx

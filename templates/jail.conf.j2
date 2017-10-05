@@ -1,0 +1,34 @@
+# {{ ansible_managed }}
+
+[DEFAULT]
+
+ignoreip  = 127.0.0.1/8 {{ firewall_fail2ban_exclude | join(' ') }}
+bantime   = {{ firewall_fail2ban_bantime }}
+maxretry  = 3
+backend   = auto
+banaction = iptables-allports
+protocol  = tcp
+{% if firewall_fail2ban_email == "" %}
+action    = %(action_)s
+{% else %}
+action    = %(action_mwl)s
+destemail = {{ firewall_fail2ban_email }}
+mta       = sendmail
+{% endif %}
+
+{% if "sshd" in firewall_fail2ban_jails %}
+[sshd]
+enabled = true
+port    = ssh
+filter  = sshd
+logpath = /var/log/auth.log
+{% endif %}
+
+{% if "nginx" in firewall_fail2ban_jails %}
+[nginx]
+enabled = true
+port    = http,https
+filter  = nginx-botsearch
+action  = iptables-allports
+logpath = /var/log/nginx/*.access.log
+{% endif %}
