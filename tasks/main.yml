@@ -1,4 +1,9 @@
 ---
+
+- name: Check if provided interface list is correct
+  fail:
+  when: not(firewall_provided_interfaces | issubset(firewall_available_interfaces))
+
 - name: install iptables
   package:
     name: iptables

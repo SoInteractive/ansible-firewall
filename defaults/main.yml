@@ -13,3 +13,7 @@ firewall_allow:
 #  - { source: "192.168.14.0/23" }
   - { interface: "docker0" }
 #  - { interface: "eth1" }
+
+firewall_provided_interfaces: "{{ firewall_allow | map(attribute='interface') | select('defined') | reject('search','docker') | list }}"
+firewall_available_interfaces: "{{ ansible_interfaces | list }}"
+
