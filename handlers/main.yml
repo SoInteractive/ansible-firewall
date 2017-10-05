@@ -3,8 +3,9 @@
   shell: iptables-save > /etc/iptables/rules.v4
   when: ansible_pkg_mgr == "apt"
 
-- name: systemd reload
-  command: systemctl daemon-reload
+- name: reload systemd
+  systemd:
+    daemon_reload: yes
 
 - name: restart fail2ban
   service:
