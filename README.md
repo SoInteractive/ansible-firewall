@@ -12,6 +12,11 @@ By design it will open communication:
   - for NTP
   - for DNS
 
+Requirements
+------------
+
+To run the role with fail2ban you need to install python-netaddr package.
+
 Example usage
 -------------
 
