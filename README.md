@@ -3,7 +3,7 @@
 Ansible Role: firewall
 ======================
 
-[![Build Status](https://ci.devops.sosoftware.pl/buildStatus/icon?job=SoInteractive/firewall/master)](https://ci.devops.sosoftware.pl/blue/organizations/jenkins/SoInteractive%2Ffirewall/activity) [![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT) [![Ansible Role](https://img.shields.io/ansible/role/18231.svg)](https://galaxy.ansible.com/SoInteractive/firewall/) [![Twitter URL](https://img.shields.io/twitter/follow/sointeractive.svg?style=social&label=Follow%20%40SoInteractive)](https://twitter.com/sointeractive)
+[![Build Status](https://travis-ci.org/SoInteractive/ansible-firewall.svg?branch=master)](https://travis-ci.org/SoInteractive/ansible-firewall) [![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT) [![Ansible Role](https://img.shields.io/badge/ansible%20role-SoInteractive.firewall-blue.svg)](https://galaxy.ansible.com/SoInteractive/firewall/) [![GitHub tag](https://img.shields.io/github/tag/sointeractive/ansible-firewall.svg)](https://github.com/SoInteractive/ansible-firewall/tags) [![Twitter URL](https://img.shields.io/twitter/follow/sointeractive.svg?style=social&label=Follow%20%40SoInteractive)](https://twitter.com/sointeractive)
 
 Ansible role to setup persistent ingress firewall based on iptables with fail2ban.
 By design it will open communication:
