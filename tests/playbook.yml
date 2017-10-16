@@ -9,4 +9,4 @@
 - hosts: all
   gather_facts: yes
   roles:
-    - firewall
+    - ansible-firewall
