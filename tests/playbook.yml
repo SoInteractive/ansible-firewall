@@ -1,12 +1,20 @@
 ---
 - hosts: all
   tasks:
-    - name: install iproute
-      package:
-        name: iproute
-        state: present
+  - name: install iproute
+    package:
+      name: iproute
+      state: present
+  - name: ensure auth.log exists in container
+    command: touch /var/log/auth.log
+    args:
+      creates: /var/log/auth.log
 
 - hosts: all
   gather_facts: yes
   roles:
     - ansible-firewall
+  vars:
+    firewall_fail2ban_force: True
+    firewall_fail2ban_exclude:
+    - 0.0.0.0/0

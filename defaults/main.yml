@@ -1,21 +1,25 @@
 ---
-
 firewall_enable_dns: True
 firewall_enable_ntp: True
+firewall_ssh_port: 22
 
 #firewall_env_subnet: "{{ ansible_default_ipv4.network }}/24"
 firewall_env_subnet: ""
 
-firewall_flush: false
 firewall_allow:
 #  - { source: "91.227.212.0/22", port: "80" }
 #  - { source: "91.227.212.0/22", port: "443" }
 #  - { source: "192.168.14.0/23" }
-  - { interface: "docker0" }
+  - { interface: "{{ ansible_default_ipv4.interface }}" }
 #  - { interface: "eth1" }
 
+# Lock all incoming and outgoing communication apart from SSH port
+# can be handy when dealing with compromised machine
+firewall_lockdown: False
 
-#fail2ban options
+# Force fail2ban, even when not on public network
+firewall_fail2ban_force: False
+
 firewall_fail2ban_email: ""
 firewall_fail2ban_exclude: []
 #  - "172.16.0.0/16"
