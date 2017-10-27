@@ -1,0 +1,38 @@
+---
+- name: temporarily accept all connections
+  iptables:
+    chain: "{{ item }}"
+    policy: ACCEPT
+  with_items:
+  - INPUT
+  - OUTPUT
+
+- name: flush INPUT and OUTPUT chains
+  command: "iptables -F {{ item }}"
+  with_items:
+  - INPUT
+  - OUTPUT
+  changed_when: False
+
+- name: allow incoming SSH connection
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: "{{ firewall_ssh_port }}"
+    jump: ACCEPT
+
+- name: allow established SSH access
+  iptables:
+    chain: OUTPUT
+    protocol: tcp
+    source_port: "{{ firewall_ssh_port }}"
+    ctstate: ESTABLISHED
+    jump: ACCEPT
+
+- name: LOCKDOWN
+  iptables:
+    chain: "{{ item }}"
+    policy: DROP
+  with_items:
+  - INPUT
+  - OUTPUT

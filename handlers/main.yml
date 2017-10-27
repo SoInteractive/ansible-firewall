@@ -1,13 +1,10 @@
 ---
-- name: update firewall
+- name: update firewall on debian-based machine
   shell: iptables-save > /etc/iptables/rules.v4
   when: ansible_pkg_mgr == "apt"
 
-- name: reload systemd
+- name: restart fail2ban
   systemd:
     daemon_reload: yes
-
-- name: restart fail2ban
-  service:
     name: fail2ban
     state: restarted

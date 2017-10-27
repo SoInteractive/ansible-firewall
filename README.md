@@ -15,7 +15,7 @@ By design it will open communication:
 Requirements
 ------------
 
-To run the role with fail2ban you need to install python-netaddr package.
+`python-netaddr` package installed on deployer host is required to run this role.
 
 Example usage
 -------------
