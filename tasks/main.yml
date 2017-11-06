@@ -1,4 +1,9 @@
 ---
+- name: Check if exclude list is not empty when fail2ban installation is enabled
+  fail:
+    msg: "Fail2ban exclude list must NOT be empty!!!"
+  when: not firewall_lockdown and firewall_fail2ban_exclude | length == 0
+
 - name: ensure firewalld and/or ufw are disabled
   systemd:
     name: "{{ item }}"
