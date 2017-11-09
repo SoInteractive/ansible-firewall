@@ -72,6 +72,24 @@
     jump: ACCEPT
   when: firewall_env_subnet != ""
 
+- name: add Docker iptables chain
+  command: iptables -N DOCKER
+  register: docker_chain
+  changed_when: docker_chain.rc == 0
+  failed_when:
+  - "docker_chain.rc != 0"
+  - "not 'iptables: Chain already exists.' in docker_chain.stderr"
+  when: firewall_restrict_docker
+
+- name: restrict Docker access to specific subnet
+  iptables:
+    chain: DOCKER
+    action: insert
+    protocol: tcp
+    source: "! {{ firewall_env_subnet }}"
+    jump: DROP
+  when: firewall_restrict_docker
+
 - name: create additional rules
   iptables:
     chain: "{{ item.chain | default('INPUT') }}"

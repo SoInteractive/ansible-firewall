@@ -5,6 +5,7 @@ firewall_ssh_port: 22
 
 #firewall_env_subnet: "{{ ansible_default_ipv4.network }}/24"
 firewall_env_subnet: ""
+firewall_restrict_docker: True
 
 firewall_allow:
 #  - { source: "91.227.212.0/22", port: "80" }
