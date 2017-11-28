@@ -2,7 +2,11 @@
 - name: Check if exclude list is not empty when fail2ban installation is enabled
   fail:
     msg: "Fail2ban exclude list must NOT be empty!!!"
-  when: not firewall_lockdown and firewall_fail2ban_exclude | length == 0
+  when: 
+    - not firewall_lockdown and firewall_fail2ban_exclude | length == 0
+    - not(ansible_default_ipv4.address | ipaddr('10.0.0.0/8')) or firewall_fail2ban_force
+    - not(ansible_default_ipv4.address | ipaddr('172.16.0.0/12')) or firewall_fail2ban_force
+    - not(ansible_default_ipv4.address | ipaddr('192.168.0.0/16')) or firewall_fail2ban_force
 
 - name: ensure firewalld and/or ufw are disabled
   systemd:
