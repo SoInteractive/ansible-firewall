@@ -82,13 +82,10 @@
   when: firewall_restrict_docker
 
 - name: restrict Docker access to specific subnet
-  iptables:
-    chain: DOCKER
-    action: insert
-    protocol: tcp
-    source: "! {{ firewall_env_subnet }}"
-    jump: DROP
-  when: firewall_restrict_docker
+  command: "/sbin/iptables -t filter -I DOCKER ! -s {{ firewall_env_subnet }} -p tcp -j DROP"
+  when:
+    - firewall_restrict_docker
+    - docker_chain is changed
 
 - name: create additional rules
   iptables:
