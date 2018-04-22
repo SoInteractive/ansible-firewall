@@ -12,6 +12,10 @@ By design it will open communication:
   - for NTP
   - for DNS
 
+# :warning: IMPORTANT NOTICE
+
+THIS PROJECT IS ABANDONED. WE DO NOT ACCEPT ANY NEW ISSUES AND/OR PULL REQUESTS.
+
 Requirements
 ------------
 
